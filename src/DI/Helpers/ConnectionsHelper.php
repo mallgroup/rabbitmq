@@ -10,6 +10,8 @@ use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
+use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerInterface;
 
 final class ConnectionsHelper extends AbstractHelper
 {
@@ -56,6 +58,6 @@ final class ConnectionsHelper extends AbstractHelper
 
 		return $builder->addDefinition($this->extension->prefix('connectionFactory'))
 			->setFactory(ConnectionFactory::class)
-			->setArguments([$connectionsDataBag]);
+			->setArguments([$connectionsDataBag, $builder->getByType(LoggerInterface::class)]);
 	}
 }

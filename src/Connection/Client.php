@@ -12,6 +12,7 @@ use Bunny\Exception\ClientException;
 use Bunny\Protocol;
 use Contributte\RabbitMQ\Connection\Exception\WaitTimeoutException;
 use Nette\Utils\Strings;
+use Psr\Log\LoggerInterface;
 use function time;
 
 /**
@@ -19,12 +20,15 @@ use function time;
  */
 class Client extends BunnyClient
 {
+	protected ?LoggerInterface $logger;
+
 	/**
 	 * Constructor.
 	 *
 	 * @param array<string|mixed> $options
+	 * @param LoggerInterface|null $logger
 	 */
-	public function __construct(array $options = [])
+	public function __construct(array $options = [], ?LoggerInterface $logger = null)
 	{
 		parent::__construct($options);
 
@@ -34,6 +38,8 @@ class Client extends BunnyClient
 		$this->options['heartbeat_callback'] = is_callable($options['heartbeat_callback'])
 			? $options['heartbeat_callback']
 			: null;
+
+		$this->logger = $logger;
 	}
 
 	/**
@@ -45,6 +51,7 @@ class Client extends BunnyClient
 		$this->flushWriteBuffer();
 
 		$this->options['heartbeat_callback'] && $this->options['heartbeat_callback']();
+		$this->logger?->debug('Bunny: heartbeat called');
 	}
 
 	public function syncDisconnect(int $replyCode = 0, string $replyText = ""): bool
@@ -78,6 +85,7 @@ class Client extends BunnyClient
 	{
 		if ($this->stream && feof($this->stream)) {
 			$this->syncDisconnect(Constants::STATUS_RESOURCE_ERROR, "Connection closed by server unexpectedly");
+			$this->logger?->debug('Bunny: Broken pipe detected, server closed stream');
 			throw new ClientException("Broken pipe or closed connection.");
 		}
 
@@ -89,6 +97,9 @@ class Client extends BunnyClient
 			}
 
 			error_clear_last();
+			$this->logger?->debug('Bunny: Broken pipe detected, send of bytes failed', [
+				'last_error' => $last,
+			]);
 			throw new ClientException('Broken pipe or closed connection.');
 		}
 	}
@@ -212,5 +223,11 @@ class Client extends BunnyClient
 
 			$this->enqueue($frame);
 		}
+	}
+
+	protected function feedReadBuffer(): bool
+	{
+		$this->logger?->debug('Bunny: read buffer called');
+		return parent::feedReadBuffer();
 	}
 }

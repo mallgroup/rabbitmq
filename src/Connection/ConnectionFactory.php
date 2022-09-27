@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Contributte\RabbitMQ\Connection;
 
 use Contributte\RabbitMQ\Connection\Exception\ConnectionFactoryException;
+use Psr\Log\LoggerInterface;
 
 final class ConnectionFactory
 {
@@ -20,7 +21,7 @@ final class ConnectionFactory
 	private array $requests = [];
 
 
-	public function __construct(private ConnectionsDataBag $connectionsDataBag)
+	public function __construct(private ConnectionsDataBag $connectionsDataBag, private ?LoggerInterface $logger = null)
 	{
 	}
 
@@ -120,6 +121,7 @@ final class ConnectionFactory
 			cycleCallback: fn () => $this->sendHeartbeat(),
 			heartbeatCallback: $connectionData['heartbeatCallback'] ?? null,
 			publishConfirm: $connectionData['publishConfirm'],
+			logger: $this->logger,
 		);
 	}
 }
