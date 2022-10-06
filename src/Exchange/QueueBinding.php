@@ -5,11 +5,15 @@ declare(strict_types=1);
 namespace Contributte\RabbitMQ\Exchange;
 
 use Contributte\RabbitMQ\Queue\IQueue;
+use function implode;
 
 final class QueueBinding
 {
 
-	public function __construct(private IQueue $queue, private string $routingKey)
+	/**
+	 * @param string[] $routingKey
+	 */
+	public function __construct(private IQueue $queue, private array $routingKey)
 	{
 	}
 
@@ -21,6 +25,15 @@ final class QueueBinding
 
 
 	public function getRoutingKey(): string
+	{
+		return implode(' ', $this->routingKey);
+	}
+
+
+	/**
+	 * @return string[]
+	 */
+	public function getRoutingKeys(): array
 	{
 		return $this->routingKey;
 	}

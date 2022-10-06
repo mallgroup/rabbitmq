@@ -7,6 +7,7 @@ namespace Contributte\RabbitMQ\Exchange;
 use Contributte\RabbitMQ\Connection\ConnectionFactory;
 use Contributte\RabbitMQ\Exchange\Exception\ExchangeFactoryException;
 use Contributte\RabbitMQ\Queue\QueueFactory;
+use Exception;
 
 final class ExchangeDeclarator
 {
@@ -17,12 +18,14 @@ final class ExchangeDeclarator
 	) {
 	}
 
-
+	/**
+	 * @throws Exception
+	 */
 	public function declareExchange(string $name): void
 	{
 		try {
 			$exchangeData = $this->exchangesDataBag->getDataByKey($name);
-		} catch (\InvalidArgumentException $e) {
+		} catch (\InvalidArgumentException) {
 			throw new ExchangeFactoryException("Exchange [$name] does not exist");
 		}
 
@@ -42,14 +45,15 @@ final class ExchangeDeclarator
 		if ($exchangeData['queueBindings'] !== []) {
 			foreach ($exchangeData['queueBindings'] as $queueName => $queueBinding) {
 				$queue = $this->queueFactory->getQueue($queueName);
-
-				$connection->getChannel()->queueBind(
-					$queue->getName(),
-					$name,
-					$queueBinding['routingKey'],
-					$queueBinding['noWait'],
-					$queueBinding['arguments']
-				);
+				foreach ($queueBinding['routingKey'] as $routingKey) {
+					$connection->getChannel()->queueBind(
+						$queue->getName(),
+						$name,
+						$routingKey,
+						$queueBinding['noWait'],
+						$queueBinding['arguments']
+					);
+				}
 			}
 		}
 

@@ -7,8 +7,6 @@ namespace Contributte\RabbitMQ\DI\Helpers;
 use Contributte\RabbitMQ\Exchange\ExchangeDeclarator;
 use Contributte\RabbitMQ\Exchange\ExchangeFactory;
 use Contributte\RabbitMQ\Exchange\ExchangesDataBag;
-use Contributte\RabbitMQ\Exchange\IExchange;
-use Contributte\RabbitMQ\Queue\IQueue;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Schema\Expect;
@@ -33,7 +31,9 @@ final class ExchangesHelper extends AbstractHelper
 				'arguments' => Expect::array(),
 				'queueBindings' => Expect::arrayOf(
 					Expect::structure([
-						'routingKey' => Expect::string(''),
+						'routingKey' => Expect::arrayOf(
+							Expect::string()
+						)->default([''])->before(fn(string|array $input): array => (array)$input),
 						'noWait' => Expect::bool(false),
 						'arguments' => Expect::array(),
 					])->castTo('array'),
@@ -51,10 +51,10 @@ final class ExchangesHelper extends AbstractHelper
 						'arguments' => Expect::arrayOf(
 							Expect::anyOf(Expect::string(), Expect::int(), Expect::bool()),
 							'string'
-						)->default([])->before(fn (array $arguments) => $this->normalizePolicyArguments($arguments)),
+						)->default([])->before(fn(array $arguments) => $this->normalizePolicyArguments($arguments)),
 					])->castTo('array'),
 				])->castTo('array')->required(false),
-				'autoCreate' => Expect::int(2)->before(fn (mixed $input) => $input === 'lazy' ? 2 : (int) $input),
+				'autoCreate' => Expect::int(2)->before(fn(mixed $input) => $input === 'lazy' ? 2 : (int)$input),
 			])->castTo('array'),
 			'string'
 		);
@@ -62,19 +62,22 @@ final class ExchangesHelper extends AbstractHelper
 
 
 	/**
-	 * @throws \InvalidArgumentException
 	 * @param array<string, mixed> $config
+	 * @throws \InvalidArgumentException
 	 */
 	public function setup(ContainerBuilder $builder, array $config = []): ServiceDefinition
 	{
-		$exchangesDataBag = $builder->addDefinition($this->extension->prefix('exchangesDataBag'))
+		$exchangesDataBag = $builder
+			->addDefinition($this->extension->prefix('exchangesDataBag'))
 			->setFactory(ExchangesDataBag::class)
 			->setArguments([$config]);
 
-		$builder->addDefinition($this->extension->prefix('exchangesDeclarator'))
+		$builder
+			->addDefinition($this->extension->prefix('exchangesDeclarator'))
 			->setFactory(ExchangeDeclarator::class);
 
-		return $builder->addDefinition($this->extension->prefix('exchangeFactory'))
+		return $builder
+			->addDefinition($this->extension->prefix('exchangeFactory'))
 			->setFactory(ExchangeFactory::class)
 			->setArguments([$exchangesDataBag]);
 	}
@@ -95,6 +98,6 @@ final class ExchangesHelper extends AbstractHelper
 
 	private function normalizePolicyArgumentKey(string $key): string
 	{
-		return strtolower((string) preg_replace(['/([a-z\d])([A-Z])/', '/([^-])([A-Z][a-z])/'], '$1-$2', $key));
+		return strtolower((string)preg_replace(['/([a-z\d])([A-Z])/', '/([^-])([A-Z][a-z])/'], '$1-$2', $key));
 	}
 }
