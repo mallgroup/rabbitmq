@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Contributte\RabbitMQ\DI\Helpers;
 
+use Contributte\RabbitMQ\AbstractDataBag;
 use Contributte\RabbitMQ\Exchange\ExchangeDeclarator;
 use Contributte\RabbitMQ\Exchange\ExchangeFactory;
 use Contributte\RabbitMQ\Exchange\ExchangesDataBag;
@@ -51,10 +52,10 @@ final class ExchangesHelper extends AbstractHelper
 						'arguments' => Expect::arrayOf(
 							Expect::anyOf(Expect::string(), Expect::int(), Expect::bool()),
 							'string'
-						)->default([])->before(fn(array $arguments) => $this->normalizePolicyArguments($arguments)),
+						)->default([])->before(fn(array $args): array => $this->normalizePolicyArguments($args)),
 					])->castTo('array'),
 				])->castTo('array')->required(false),
-				'autoCreate' => Expect::int(2)->before(fn(mixed $input) => $input === 'lazy' ? 2 : (int)$input),
+				'autoCreate' => Expect::int(2)->before(fn(mixed $input): int => $this->normalizeAutoDeclare($input)),
 			])->castTo('array'),
 			'string'
 		);
@@ -99,5 +100,14 @@ final class ExchangesHelper extends AbstractHelper
 	private function normalizePolicyArgumentKey(string $key): string
 	{
 		return strtolower((string)preg_replace(['/([a-z\d])([A-Z])/', '/([^-])([A-Z][a-z])/'], '$1-$2', $key));
+	}
+
+	private function normalizeAutoDeclare(mixed $value): int
+	{
+		return match($value) {
+			'lazy' => AbstractDataBag::AutoCreateLazy,
+			'never' => AbstractDataBag::AutoCreateNever,
+			default => (int) $value ? 1 : 0,
+		};
 	}
 }

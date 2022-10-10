@@ -6,6 +6,8 @@ namespace Contributte\RabbitMQ;
 
 abstract class AbstractDataBag
 {
+	public const AutoCreateLazy = 2;
+	public const AutoCreateNever = 3;
 
 	/**
 	 * @var array<string, mixed>

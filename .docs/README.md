@@ -45,6 +45,7 @@ rabbitmq:
 			  # true - force queue declare on first queue operation during request
 			  # lazy - force queue declare as late as possible (when first needed)
 			  # false - do not declare (will fail if not created)
+			  # never - do not declare even if command is called, this one is mainly for no-permissions state
 
 	exchanges:
 		testExchange:
@@ -57,6 +58,18 @@ rabbitmq:
 			  # true - force queue declare on first queue operation during request
 			  # lazy - force queue declare as late as possible (when first needed)
 			  # false - do not declare (will fail if not created)
+			  # never - do not declare even if command is called, this one is mainly for no-permissions state
+
+		multipleRoutingKey:
+			connection: default
+			type: fanout
+			queueBindings:
+				testQueue:
+					routingKey:
+						- testRoutingKey
+						- testRoutingKey2
+						# Multiple routing keys
+			autoCreate: lazy
 
 		federatedExchange:
 			connection: default
@@ -120,6 +133,9 @@ accessing undeclared queues/exchanges.
 
 If you need to declare the queues and exchanges as late as possible, you can set `autoCreate: lazy`, that will move creation
 on the real use of queues/exchanges, so initializing classes will not trigger creation.
+
+Now, time to time you can have exchange, you want to connect to, but do not have rights to declare it. In that case,
+you can use newly added option `autoCreate: never` that will prevent declaration.
 
 ### Federation
 

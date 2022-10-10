@@ -12,6 +12,7 @@ use Contributte\RabbitMQ\Connection\Exception\WaitTimeoutException;
 use Contributte\RabbitMQ\Exchange\IExchange;
 use Contributte\RabbitMQ\LazyDeclarator;
 use Contributte\RabbitMQ\Queue\IQueue;
+use Exception;
 
 final class Producer implements IProducer
 {
@@ -70,6 +71,7 @@ final class Producer implements IProducer
 
 	/**
 	 * @param array<string, string|int> $headers
+	 * @throws Exception
 	 */
 	private function tryPublish(IQueue|IExchange $target, string $message, array $headers, string $exchange, string $routingKey, int $try = 0): void
 	{

@@ -10,6 +10,7 @@ use Contributte\RabbitMQ\Exchange\ExchangeDeclarator;
 use Contributte\RabbitMQ\Exchange\ExchangesDataBag;
 use Contributte\RabbitMQ\Queue\QueueDeclarator;
 use Contributte\RabbitMQ\Queue\QueuesDataBag;
+use Exception;
 
 final class LazyDeclarator
 {
@@ -22,10 +23,13 @@ final class LazyDeclarator
 	) {
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function declare(): void
 	{
 		array_map(
-			fn (IConnection $connection) => $connection->resetChannel(),
+			static fn (IConnection $connection) => $connection->resetChannel(),
 			$this->connectionFactory->getConnections()
 		);
 		$this->declareQueues($this->queuesDataBag->getDataKeys());
@@ -34,12 +38,13 @@ final class LazyDeclarator
 
 	/**
 	 * @param string[] $queues
+	 * @throws Exception
 	 */
 	private function declareQueues(array $queues): void
 	{
 		foreach ($queues as $queue) {
 			$config = $this->queuesDataBag->getDataByKey($queue);
-			if ($config['autoCreate'] !== 2) {
+			if ($config['autoCreate'] !== AbstractDataBag::AutoCreateLazy) {
 				continue;
 			}
 			$this->queueDeclarator->declareQueue($queue);
@@ -48,12 +53,13 @@ final class LazyDeclarator
 
 	/**
 	 * @param string[] $exchanges
+	 * @throws Exception
 	 */
 	private function declareExchanges(array $exchanges): void
 	{
 		foreach ($exchanges as $exchange) {
 			$config = $this->exchangesDataBag->getDataByKey($exchange);
-			if ($config['autoCreate'] !== 2) {
+			if ($config['autoCreate'] !== AbstractDataBag::AutoCreateLazy) {
 				continue;
 			}
 			$this->exchangeDeclarator->declareExchange($exchange);
