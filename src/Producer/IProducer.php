@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Producer;
+namespace Mallgroup\RabbitMQ\Producer;
 
 interface IProducer
 {
-	public const DELIVERY_MODE_NON_PERSISTENT = 1;
-	public const DELIVERY_MODE_PERSISTENT = 2;
+	public const DeliveryModeNonPersistent = 1;
+	public const DeliveryModePersistent = 2;
 
 	/**
 	 * @param array<string, string|int> $headers

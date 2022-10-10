@@ -2,15 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Consumer;
+namespace Mallgroup\RabbitMQ\Consumer;
 
 use Bunny\AbstractClient;
 use Bunny\Channel;
 use Bunny\Client;
 use Bunny\Message;
-use Contributte\RabbitMQ\Consumer\Exception\UnexpectedConsumerResultTypeException;
-use Contributte\RabbitMQ\LazyDeclarator;
-use Contributte\RabbitMQ\Queue\IQueue;
+use Mallgroup\RabbitMQ\Consumer\Exception\UnexpectedConsumerResultTypeException;
+use Mallgroup\RabbitMQ\LazyDeclarator;
+use Mallgroup\RabbitMQ\Queue\IQueue;
 
 class BulkConsumer extends Consumer
 {

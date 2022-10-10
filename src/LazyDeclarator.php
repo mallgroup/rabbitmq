@@ -2,14 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ;
+namespace Mallgroup\RabbitMQ;
 
-use Contributte\RabbitMQ\Connection\ConnectionFactory;
-use Contributte\RabbitMQ\Connection\IConnection;
-use Contributte\RabbitMQ\Exchange\ExchangeDeclarator;
-use Contributte\RabbitMQ\Exchange\ExchangesDataBag;
-use Contributte\RabbitMQ\Queue\QueueDeclarator;
-use Contributte\RabbitMQ\Queue\QueuesDataBag;
+use Mallgroup\RabbitMQ\Connection\ConnectionFactory;
+use Mallgroup\RabbitMQ\Connection\IConnection;
+use Mallgroup\RabbitMQ\Exchange\ExchangeDeclarator;
+use Mallgroup\RabbitMQ\Exchange\ExchangesDataBag;
+use Mallgroup\RabbitMQ\Queue\QueueDeclarator;
+use Mallgroup\RabbitMQ\Queue\QueuesDataBag;
+use Exception;
 
 final class LazyDeclarator
 {
@@ -22,10 +23,13 @@ final class LazyDeclarator
 	) {
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function declare(): void
 	{
 		array_map(
-			fn (IConnection $connection) => $connection->resetChannel(),
+			static fn (IConnection $connection) => $connection->resetChannel(),
 			$this->connectionFactory->getConnections()
 		);
 		$this->declareQueues($this->queuesDataBag->getDataKeys());
@@ -34,12 +38,13 @@ final class LazyDeclarator
 
 	/**
 	 * @param string[] $queues
+	 * @throws Exception
 	 */
 	private function declareQueues(array $queues): void
 	{
 		foreach ($queues as $queue) {
 			$config = $this->queuesDataBag->getDataByKey($queue);
-			if ($config['autoCreate'] !== 2) {
+			if ($config['autoCreate'] !== AbstractDataBag::AutoCreateLazy) {
 				continue;
 			}
 			$this->queueDeclarator->declareQueue($queue);
@@ -48,12 +53,13 @@ final class LazyDeclarator
 
 	/**
 	 * @param string[] $exchanges
+	 * @throws Exception
 	 */
 	private function declareExchanges(array $exchanges): void
 	{
 		foreach ($exchanges as $exchange) {
 			$config = $this->exchangesDataBag->getDataByKey($exchange);
-			if ($config['autoCreate'] !== 2) {
+			if ($config['autoCreate'] !== AbstractDataBag::AutoCreateLazy) {
 				continue;
 			}
 			$this->exchangeDeclarator->declareExchange($exchange);

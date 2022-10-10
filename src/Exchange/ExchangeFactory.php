@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Exchange;
+namespace Mallgroup\RabbitMQ\Exchange;
 
-use Contributte\RabbitMQ\Connection\ConnectionFactory;
-use Contributte\RabbitMQ\Exchange\Exception\ExchangeFactoryException;
-use Contributte\RabbitMQ\Queue\Exception\QueueFactoryException;
-use Contributte\RabbitMQ\Queue\QueueFactory;
+use Mallgroup\RabbitMQ\Connection\ConnectionFactory;
+use Mallgroup\RabbitMQ\Exchange\Exception\ExchangeFactoryException;
+use Mallgroup\RabbitMQ\Queue\Exception\QueueFactoryException;
+use Mallgroup\RabbitMQ\Queue\QueueFactory;
 
 final class ExchangeFactory
 {

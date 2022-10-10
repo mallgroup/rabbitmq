@@ -50,6 +50,9 @@
         <exclude name="Squiz.Arrays.ArrayDeclaration.NoKeySpecified"/>
         <exclude name="Squiz.Strings.DoubleQuoteUsage.ContainsVar"/>
     </rule>
+    <rule ref="Generic.NamingConventions.UpperCaseConstantName">
+        <exclude name="Generic.NamingConventions.UpperCaseConstantName"/>
+    </rule>
     <!-- todo solve blank line at the beginning of class enforced by Squiz.WhiteSpace.MemberVarSpacing -->
     <!-- todo solve blank line at the beginning of class enforced by Squiz.WhiteSpace.FunctionSpacing -->
 </ruleset>

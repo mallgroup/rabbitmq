@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Console\Command;
+namespace Mallgroup\RabbitMQ\Console\Command;
 
-use Contributte\RabbitMQ\Consumer\ConsumerFactory;
-use Contributte\RabbitMQ\Consumer\ConsumersDataBag;
-use Contributte\RabbitMQ\Consumer\Exception\ConsumerFactoryException;
+use Mallgroup\RabbitMQ\Consumer\ConsumerFactory;
+use Mallgroup\RabbitMQ\Consumer\ConsumersDataBag;
+use Mallgroup\RabbitMQ\Consumer\Exception\ConsumerFactoryException;
 use Symfony\Component\Console\Command\Command;
 
 abstract class AbstractConsumerCommand extends Command

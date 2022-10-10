@@ -24,4 +24,7 @@
 	<rule ref="Generic.Files.LineEndings">
 		<exclude name="Generic.Files.LineEndings.InvalidEOLChar"/>
 	</rule>
+	<rule ref="Generic.NamingConventions.UpperCaseConstantName">
+		<exclude name="Generic.NamingConventions.UpperCaseConstantName"/>
+	</rule>
 </ruleset>

@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ;
+namespace Mallgroup\RabbitMQ;
 
-use Contributte\RabbitMQ\Producer\Exception\ProducerFactoryException;
-use Contributte\RabbitMQ\Producer\IProducer;
-use Contributte\RabbitMQ\Producer\ProducerFactory;
+use Mallgroup\RabbitMQ\Producer\Exception\ProducerFactoryException;
+use Mallgroup\RabbitMQ\Producer\IProducer;
+use Mallgroup\RabbitMQ\Producer\ProducerFactory;
 
 /**
  * This package uses composer library bunny/bunny. For more information,

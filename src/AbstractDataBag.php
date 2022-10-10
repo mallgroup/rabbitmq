@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ;
+namespace Mallgroup\RabbitMQ;
 
 abstract class AbstractDataBag
 {
+	public const AutoCreateLazy = 2;
+	public const AutoCreateNever = 3;
 
 	/**
 	 * @var array<string, mixed>

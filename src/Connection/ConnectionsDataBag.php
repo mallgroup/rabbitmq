@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Connection;
+namespace Mallgroup\RabbitMQ\Connection;
 
-use Contributte\RabbitMQ\AbstractDataBag;
+use Mallgroup\RabbitMQ\AbstractDataBag;
 
 final class ConnectionsDataBag extends AbstractDataBag
 {

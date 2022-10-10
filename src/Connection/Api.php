@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Connection;
+namespace Mallgroup\RabbitMQ\Connection;
 
 class Api implements IApi
 {

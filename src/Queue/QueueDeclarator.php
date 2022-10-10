@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Queue;
+namespace Mallgroup\RabbitMQ\Queue;
 
-use Contributte\RabbitMQ\Connection\ConnectionFactory;
-use Contributte\RabbitMQ\Queue\Exception\QueueFactoryException;
+use Mallgroup\RabbitMQ\Connection\ConnectionFactory;
+use Mallgroup\RabbitMQ\Queue\Exception\QueueFactoryException;
+use Exception;
 
 final class QueueDeclarator
 {
@@ -16,6 +17,9 @@ final class QueueDeclarator
 	) {
 	}
 
+	/**
+	 * @throws Exception
+	 */
 	public function declareQueue(string $name): void
 	{
 		try {

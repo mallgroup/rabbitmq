@@ -2,11 +2,11 @@
 
 declare(strict_types = 1);
 
-namespace Contributte\RabbitMQ\Tests\Cases\DI;
+namespace Mallgroup\RabbitMQ\Tests\Cases\DI;
 
-use Contributte\RabbitMQ\Connection\ConnectionFactory;
-use Contributte\RabbitMQ\DI\RabbitMQExtension;
-use Contributte\RabbitMQ\Tests\Toolkit\NeonLoader;
+use Mallgroup\RabbitMQ\Connection\ConnectionFactory;
+use Mallgroup\RabbitMQ\DI\RabbitMQExtension;
+use Mallgroup\RabbitMQ\Tests\Toolkit\NeonLoader;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;

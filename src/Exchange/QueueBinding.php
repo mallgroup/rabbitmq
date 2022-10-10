@@ -2,15 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Exchange;
+namespace Mallgroup\RabbitMQ\Exchange;
 
-use Contributte\RabbitMQ\Queue\IQueue;
+use Mallgroup\RabbitMQ\Queue\IQueue;
 
 final class QueueBinding
 {
 
-	public function __construct(private IQueue $queue, private string $routingKey)
-	{
+	/**
+	 * @param string[] $routingKey
+	 */
+	public function __construct(
+		private IQueue $queue,
+		private array $routingKey
+	) {
 	}
 
 
@@ -20,7 +25,10 @@ final class QueueBinding
 	}
 
 
-	public function getRoutingKey(): string
+	/**
+	 * @return string[]
+	 */
+	public function getRoutingKey(): array
 	{
 		return $this->routingKey;
 	}
