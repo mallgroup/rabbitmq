@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mallgroup\RabbitMQ\Exchange;
 
 use Mallgroup\RabbitMQ\Queue\IQueue;
-use function implode;
 
 final class QueueBinding
 {
@@ -13,8 +12,10 @@ final class QueueBinding
 	/**
 	 * @param string[] $routingKey
 	 */
-	public function __construct(private IQueue $queue, private array $routingKey)
-	{
+	public function __construct(
+		private IQueue $queue,
+		private array $routingKey
+	) {
 	}
 
 
@@ -24,16 +25,10 @@ final class QueueBinding
 	}
 
 
-	public function getRoutingKey(): string
-	{
-		return implode(' ', $this->routingKey);
-	}
-
-
 	/**
 	 * @return string[]
 	 */
-	public function getRoutingKeys(): array
+	public function getRoutingKey(): array
 	{
 		return $this->routingKey;
 	}
