@@ -7,6 +7,7 @@ namespace Contributte\RabbitMQ\Connection;
 use Bunny\Channel;
 use Bunny\Exception\ClientException;
 use Contributte\RabbitMQ\Connection\Exception\ConnectionException;
+use Psr\Log\LoggerInterface;
 use function in_array;
 use function max;
 use function time;
@@ -48,6 +49,7 @@ final class Connection implements IConnection
 		?callable $cycleCallback = null,
 		?callable $heartbeatCallback = null,
 		bool|int $publishConfirm = false,
+		?LoggerInterface $logger = null,
 	) {
 		$this->connectionParams = [
 			'host' => $host,
@@ -66,7 +68,7 @@ final class Connection implements IConnection
 			'heartbeat_callback' => $heartbeatCallback,
 		];
 
-		$this->bunnyClient = $this->createNewConnection();
+		$this->bunnyClient = $this->createNewConnection($logger);
 		$this->heartbeat = max($heartbeat, self::HEARTBEAT_INTERVAL);
 
 		if (!$lazy) {
@@ -172,9 +174,9 @@ final class Connection implements IConnection
 		return $this->connectionParams['vhost'];
 	}
 
-	private function createNewConnection(): Client
+	private function createNewConnection(?LoggerInterface $logger = null): Client
 	{
-		return new Client($this->connectionParams);
+		return new Client($this->connectionParams, $logger);
 	}
 
 	public function isConnected(): bool
