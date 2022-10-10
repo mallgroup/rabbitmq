@@ -16,14 +16,14 @@ use Nette\Schema\Schema;
 final class ExchangesHelper extends AbstractHelper
 {
 
-	public const EXCHANGE_TYPES = ['direct', 'topic', 'headers', 'fanout', 'x-delayed-message'];
+	public const ExchangeTypes = ['direct', 'topic', 'headers', 'fanout', 'x-delayed-message'];
 
 	public function getConfigSchema(): Schema
 	{
 		return Expect::arrayOf(
 			Expect::structure([
 				'connection' => Expect::string('default'),
-				'type' => Expect::anyOf(...self::EXCHANGE_TYPES)->default(self::EXCHANGE_TYPES[0]),
+				'type' => Expect::anyOf(...self::ExchangeTypes)->default(self::ExchangeTypes[0]),
 				'passive' => Expect::bool(false),
 				'durable' => Expect::bool(true),
 				'autoDelete' => Expect::bool(false),
@@ -46,7 +46,7 @@ final class ExchangesHelper extends AbstractHelper
 					'reconnectDelay' => Expect::int(1)->min(1),
 					'messageTTL' => Expect::int(),
 					'expires' => Expect::int(),
-					'ackMode' => Expect::anyOf(...self::ACK_TYPES)->default(self::ACK_TYPES[0]),
+					'ackMode' => Expect::anyOf(...self::AckTypes)->default(self::AckTypes[0]),
 					'policy' => Expect::structure([
 						'priority' => Expect::int(0),
 						'arguments' => Expect::arrayOf(
@@ -55,7 +55,11 @@ final class ExchangesHelper extends AbstractHelper
 						)->default([])->before(fn(array $args): array => $this->normalizePolicyArguments($args)),
 					])->castTo('array'),
 				])->castTo('array')->required(false),
-				'autoCreate' => Expect::int(2)->before(fn(mixed $input): int => $this->normalizeAutoDeclare($input)),
+				'autoCreate' => Expect::int(
+					AbstractDataBag::AutoCreateLazy
+				)->before(
+					fn(mixed $input): int => $this->normalizeAutoDeclare($input)
+				),
 			])->castTo('array'),
 			'string'
 		);
@@ -100,14 +104,5 @@ final class ExchangesHelper extends AbstractHelper
 	private function normalizePolicyArgumentKey(string $key): string
 	{
 		return strtolower((string)preg_replace(['/([a-z\d])([A-Z])/', '/([^-])([A-Z][a-z])/'], '$1-$2', $key));
-	}
-
-	private function normalizeAutoDeclare(mixed $value): int
-	{
-		return match($value) {
-			'lazy' => AbstractDataBag::AutoCreateLazy,
-			'never' => AbstractDataBag::AutoCreateNever,
-			default => (int) $value ? 1 : 0,
-		};
 	}
 }

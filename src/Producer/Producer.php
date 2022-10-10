@@ -32,6 +32,7 @@ final class Producer implements IProducer
 
 	/**
 	 * @param array<string, string|int> $headers
+	 * @throws Exception
 	 */
 	public function publish(string $message, array $headers = [], ?string $routingKey = null): void
 	{

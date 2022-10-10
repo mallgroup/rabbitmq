@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Contributte\RabbitMQ\DI\Helpers;
 
+use Contributte\RabbitMQ\AbstractDataBag;
 use Contributte\RabbitMQ\Queue\QueueDeclarator;
 use Contributte\RabbitMQ\Queue\QueueFactory;
 use Contributte\RabbitMQ\Queue\QueuesDataBag;
@@ -25,7 +26,11 @@ final class QueuesHelper extends AbstractHelper
 				'autoDelete' => Expect::bool(false),
 				'noWait' => Expect::bool(false),
 				'arguments' => Expect::array(),
-				'autoCreate' => Expect::int(2)->before(fn (mixed $input) => $input === 'lazy' ? 2 : (int) $input),
+				'autoCreate' => Expect::int(
+					AbstractDataBag::AutoCreateLazy
+				)->before(
+					fn(mixed $input): int => $this->normalizeAutoDeclare($input)
+				),
 			])->castTo('array'),
 			'string'
 		);
@@ -36,14 +41,17 @@ final class QueuesHelper extends AbstractHelper
 	 */
 	public function setup(ContainerBuilder $builder, array $config = []): ServiceDefinition
 	{
-		$queuesDataBag = $builder->addDefinition($this->extension->prefix('queuesDataBag'))
+		$queuesDataBag = $builder
+			->addDefinition($this->extension->prefix('queuesDataBag'))
 			->setFactory(QueuesDataBag::class)
 			->setArguments([$config]);
 
-		$builder->addDefinition($this->extension->prefix('queueDeclarator'))
+		$builder
+			->addDefinition($this->extension->prefix('queueDeclarator'))
 			->setFactory(QueueDeclarator::class);
 
-		return $builder->addDefinition($this->extension->prefix('queueFactory'))
+		return $builder
+			->addDefinition($this->extension->prefix('queueFactory'))
 			->setFactory(QueueFactory::class)
 			->setArguments([$queuesDataBag]);
 	}

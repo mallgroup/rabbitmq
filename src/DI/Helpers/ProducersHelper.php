@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Contributte\RabbitMQ\DI\Helpers;
 
+use Contributte\RabbitMQ\Producer\IProducer;
 use Contributte\RabbitMQ\Producer\Producer;
 use Contributte\RabbitMQ\Producer\ProducerFactory;
 use Contributte\RabbitMQ\Producer\ProducersDataBag;
@@ -15,9 +16,9 @@ use Nette\Schema\Schema;
 final class ProducersHelper extends AbstractHelper
 {
 
-	public const DELIVERY_MODES = [
-		Producer::DELIVERY_MODE_NON_PERSISTENT,
-		Producer::DELIVERY_MODE_PERSISTENT,
+	public const DeliveryModes = [
+		IProducer::DeliveryModeNonPersistent,
+		IProducer::DeliveryModePersistent,
 	];
 
 	public function getConfigSchema(): Schema
@@ -27,8 +28,8 @@ final class ProducersHelper extends AbstractHelper
 				'exchange' => Expect::string()->required(false),
 				'queue' => Expect::string()->required(false),
 				'contentType' => Expect::string('text/plain'),
-				'deliveryMode' => Expect::anyOf(...self::DELIVERY_MODES)
-					->default(Producer::DELIVERY_MODE_PERSISTENT),
+				'deliveryMode' => Expect::anyOf(...self::DeliveryModes)
+					->default(IProducer::DeliveryModePersistent),
 			])->castTo('array'),
 			'string'
 		);

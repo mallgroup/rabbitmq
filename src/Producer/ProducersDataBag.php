@@ -29,12 +29,12 @@ final class ProducersDataBag extends AbstractDataBag
 	 */
 	public function addProducerByData(string $producerName, array $data): void
 	{
-		$data['deliveryMode'] ??= IProducer::DELIVERY_MODE_PERSISTENT;
+		$data['deliveryMode'] ??= IProducer::DeliveryModePersistent;
 		$data['contentType'] ??= 'text/plain';
 		$data['exchange'] ??= null;
 		$data['queue'] ??= null;
 
-		if (!in_array($data['deliveryMode'], ProducersHelper::DELIVERY_MODES, true)) {
+		if (!in_array($data['deliveryMode'], ProducersHelper::DeliveryModes, true)) {
 			throw new \InvalidArgumentException(
 				"Unknown exchange type [{$data['type']}]"
 			);
