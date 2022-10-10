@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Tests\Mocks\Helper;
+namespace Mallgroup\RabbitMQ\Tests\Mocks\Helper;
 
 final class RabbitMQMessageHelper
 {

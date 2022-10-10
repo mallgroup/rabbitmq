@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Producer;
+namespace Mallgroup\RabbitMQ\Producer;
 
-use Contributte\RabbitMQ\AbstractDataBag;
-use Contributte\RabbitMQ\DI\Helpers\ProducersHelper;
+use Mallgroup\RabbitMQ\AbstractDataBag;
+use Mallgroup\RabbitMQ\DI\Helpers\ProducersHelper;
 
 final class ProducersDataBag extends AbstractDataBag
 {

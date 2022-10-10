@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Console\Command;
+namespace Mallgroup\RabbitMQ\Console\Command;
 
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;

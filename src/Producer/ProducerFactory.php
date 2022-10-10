@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Producer;
+namespace Mallgroup\RabbitMQ\Producer;
 
-use Contributte\RabbitMQ\Exchange\ExchangeFactory;
-use Contributte\RabbitMQ\LazyDeclarator;
-use Contributte\RabbitMQ\Producer\Exception\ProducerFactoryException;
-use Contributte\RabbitMQ\Queue\QueueFactory;
+use Mallgroup\RabbitMQ\Exchange\ExchangeFactory;
+use Mallgroup\RabbitMQ\LazyDeclarator;
+use Mallgroup\RabbitMQ\Producer\Exception\ProducerFactoryException;
+use Mallgroup\RabbitMQ\Queue\QueueFactory;
 
 final class ProducerFactory
 {

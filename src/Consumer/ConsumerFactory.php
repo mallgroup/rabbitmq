@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Consumer;
+namespace Mallgroup\RabbitMQ\Consumer;
 
-use Contributte\RabbitMQ\Consumer\Exception\ConsumerFactoryException;
-use Contributte\RabbitMQ\LazyDeclarator;
-use Contributte\RabbitMQ\Queue\QueueFactory;
+use Mallgroup\RabbitMQ\Consumer\Exception\ConsumerFactoryException;
+use Mallgroup\RabbitMQ\LazyDeclarator;
+use Mallgroup\RabbitMQ\Queue\QueueFactory;
 
 final class ConsumerFactory
 {

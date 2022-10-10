@@ -26,12 +26,12 @@
   ],
   "autoload": {
     "psr-4": {
-      "Contributte\\RabbitMQ\\": "src/"
+      "Mallgroup\\RabbitMQ\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Contributte\\RabbitMQ\\Tests\\": "tests"
+      "Mallgroup\\RabbitMQ\\Tests\\": "tests"
     }
   },
   "require": {

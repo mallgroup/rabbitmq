@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Queue;
+namespace Mallgroup\RabbitMQ\Queue;
 
-use Contributte\RabbitMQ\AbstractDataBag;
+use Mallgroup\RabbitMQ\AbstractDataBag;
 
 final class QueuesDataBag extends AbstractDataBag
 {

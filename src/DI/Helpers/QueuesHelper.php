@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\DI\Helpers;
+namespace Mallgroup\RabbitMQ\DI\Helpers;
 
-use Contributte\RabbitMQ\AbstractDataBag;
-use Contributte\RabbitMQ\Queue\QueueDeclarator;
-use Contributte\RabbitMQ\Queue\QueueFactory;
-use Contributte\RabbitMQ\Queue\QueuesDataBag;
+use Mallgroup\RabbitMQ\AbstractDataBag;
+use Mallgroup\RabbitMQ\Queue\QueueDeclarator;
+use Mallgroup\RabbitMQ\Queue\QueueFactory;
+use Mallgroup\RabbitMQ\Queue\QueuesDataBag;
 use Nette\DI\ContainerBuilder;
 use Nette\DI\Definitions\ServiceDefinition;
 use Nette\Schema\Expect;

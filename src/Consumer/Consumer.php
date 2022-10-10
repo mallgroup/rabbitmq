@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Consumer;
+namespace Mallgroup\RabbitMQ\Consumer;
 
 use Bunny\Channel;
 use Bunny\Client;
 use Bunny\Exception\ClientException;
 use Bunny\Message;
-use Contributte\RabbitMQ\LazyDeclarator;
-use Contributte\RabbitMQ\Queue\IQueue;
+use Mallgroup\RabbitMQ\LazyDeclarator;
+use Mallgroup\RabbitMQ\Queue\IQueue;
 
 class Consumer
 {

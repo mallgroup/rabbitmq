@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Exchange;
+namespace Mallgroup\RabbitMQ\Exchange;
 
-use Contributte\RabbitMQ\Queue\IQueue;
+use Mallgroup\RabbitMQ\Queue\IQueue;
 use function implode;
 
 final class QueueBinding

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Consumer;
+namespace Mallgroup\RabbitMQ\Consumer;
 
-use Contributte\RabbitMQ\AbstractDataBag;
+use Mallgroup\RabbitMQ\AbstractDataBag;
 
 final class ConsumersDataBag extends AbstractDataBag
 {

@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Connection;
+namespace Mallgroup\RabbitMQ\Connection;
 
-use Contributte\RabbitMQ\Connection\Exception\ConnectionFactoryException;
+use Mallgroup\RabbitMQ\Connection\Exception\ConnectionFactoryException;
 
 final class ConnectionFactory
 {

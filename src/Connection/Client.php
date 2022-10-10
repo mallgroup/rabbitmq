@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Contributte\RabbitMQ\Connection;
+namespace Mallgroup\RabbitMQ\Connection;
 
 use Bunny\Client as BunnyClient;
 use Bunny\ClientStateEnum;
@@ -10,7 +10,7 @@ use Bunny\Constants;
 use Bunny\Exception\BunnyException;
 use Bunny\Exception\ClientException;
 use Bunny\Protocol;
-use Contributte\RabbitMQ\Connection\Exception\WaitTimeoutException;
+use Mallgroup\RabbitMQ\Connection\Exception\WaitTimeoutException;
 use Nette\Utils\Strings;
 use function time;
 
