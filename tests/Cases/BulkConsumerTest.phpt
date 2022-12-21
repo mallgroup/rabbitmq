@@ -199,16 +199,13 @@ final class BulkConsumerTest extends TestCase
 
 	protected function createLazyDeclarator(): LazyDeclarator
 	{
-		return new class extends LazyDeclarator{
-			public function __construct()
-			{
-				$this->queuesDataBag = \Mockery::spy(QueuesDataBag::class);
-				$this->exchangesDataBag = \Mockery::spy(ExchangesDataBag::class);
-				$this->queueDeclarator = \Mockery::spy(QueueDeclarator::class);
-				$this->exchangeDeclarator = \Mockery::spy(ExchangeDeclarator::class);
-				$this->connectionFactory = \Mockery::spy(ConnectionFactory::class);
-			}
-		};
+		return new LazyDeclarator(
+			\Mockery::spy(QueuesDataBag::class),
+			\Mockery::spy(ExchangesDataBag::class),
+			\Mockery::spy(QueueDeclarator::class),
+			\Mockery::spy(ExchangeDeclarator::class),
+			\Mockery::spy(ConnectionFactory::class),
+		);
 	}
 }
 
