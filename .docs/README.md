@@ -144,6 +144,8 @@ to upstream server and have correct rights.
 
 For now, only exchanges are supported for federation, but queues will be added in near future.
 
+You can still modify URI of federation link, to add parameters like ?heartbeat=5 to add heartbeat every 5 seconds or ?heartbeat=5&connection_timeout=10000 to have heartbeat 5 seconds and timeout 10 seconds.
+
 if you need more about federation, see https://www.rabbitmq.com/federation.html
 
 ### Publishing messages
