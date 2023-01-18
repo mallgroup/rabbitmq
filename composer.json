@@ -39,8 +39,7 @@
     "ext-pcntl": "*",
     "bunny/bunny": "^0.5",
     "symfony/console": "~3.3 || ^4.0 || ^5.0 || ^6.0",
-    "nette/di": "^3.0.7",
-    "nette/utils": "^3.2.0",
+    "nette/di": "^3.1.0",
     "nette/schema": "^1.2"
   },
   "require-dev": {
