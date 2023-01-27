@@ -32,9 +32,12 @@ final class ExchangesHelper extends AbstractHelper
 				'arguments' => Expect::array(),
 				'queueBindings' => Expect::arrayOf(
 					Expect::structure([
-						'routingKey' => Expect::arrayOf(
-							Expect::string()
-						)->default([''])->before(fn(string|array $input): array => (array)$input),
+						'routingKey' => Expect::anyOf(
+							Expect::string(),
+							Expect::arrayOf(
+								Expect::string()
+							)
+						)->default([''])->castTo('array'),
 						'noWait' => Expect::bool(false),
 						'arguments' => Expect::array(),
 					])->castTo('array'),
