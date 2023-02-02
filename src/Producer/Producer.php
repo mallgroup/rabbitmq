@@ -31,7 +31,7 @@ final class Producer implements IProducer
 	}
 
 	/**
-	 * @param array<string, string|int> $headers
+	 * @param array<string, scalar|null|\DateTimeInterface|array<string, scalar|null|\DateTimeInterface>> $headers
 	 * @throws Exception
 	 */
 	public function publish(string $message, array $headers = [], ?string $routingKey = null): void
@@ -71,7 +71,7 @@ final class Producer implements IProducer
 
 
 	/**
-	 * @param array<string, string|int> $headers
+	 * @param array<string, scalar|null|\DateTimeInterface|array<string, scalar|null|\DateTimeInterface>> $headers
 	 * @throws Exception
 	 */
 	private function tryPublish(IQueue|IExchange $target, string $message, array $headers, string $exchange, string $routingKey, int $try = 0): void
