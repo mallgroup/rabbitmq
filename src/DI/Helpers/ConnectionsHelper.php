@@ -37,7 +37,7 @@ final class ConnectionsHelper extends AbstractHelper
 				'admin' => Expect::structure([
 					'port' => Expect::int(15672),
 					'secure' => Expect::bool(false),
-				])->castTo('array')->required(false),
+				])->castTo('array'),
 			])->castTo('array'),
 			'string'
 		);
